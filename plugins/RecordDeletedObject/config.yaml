@@ -1,0 +1,26 @@
+name: RecordDeletedObject
+id:   RecordDeletedObject
+key:  recorddeletedobject
+author_name: Hideki Abe
+author_link: https://www.anothersky.pw/
+version: 1.0
+schema_version: 1.0
+
+applications:
+  data_api:
+    endpoints:
+      - id: get_deleted_entries
+        route: /sites/:site_id/deletedentries
+        verb: GET
+        version: 2
+        handler: $recorddeletedobject::RecordDeletedObject::EndPoint::DeletedObject::get_deleted_entries
+        requires_login: 0
+callbacks:
+    MT::App::CMS::cms_post_delete.entry: $recorddeletedobject::RecordDeletedObject::Callbacks::post_delete_entry
+tags:
+    block:
+        DeletedObjects: $recorddeletedobject::RecordDeletedObject::Tags::_hdlr_deleted_objects
+    function:
+        DeletedDate: $recorddeletedobject::RecordDeletedObject::Tags::_hdlr_deleted_date
+object_types:
+    deletedobject: RecordDeletedObject::DeletedObject
